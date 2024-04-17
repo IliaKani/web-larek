@@ -1,0 +1,39 @@
+@use "variables" as *;
+@use "mixins";
+
+.basket {
+  @include mixins.flex(column);
+  gap: 2rem;
+  height: 100%;
+
+  &__list {
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  &__item {
+    border-bottom: 1px solid $primary;
+    padding: 1.5rem 0;
+
+    &-index {
+      @include mixins.flex(row);
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background-color: $primary;
+      color: white;
+      margin-right: 1rem;
+    }
+
+    &-delete {
+      @include mixins.icon(2rem, 'trash');
+      @include mixins.link($hover, white);
+      opacity: 0.5;
+      margin-left: 4rem;
+    }
+  }
+}

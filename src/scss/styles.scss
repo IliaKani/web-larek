@@ -1,0 +1,21 @@
+@use "../vendor/normalize";
+@use "../vendor/ys-text";
+@use "../vendor/garamond";
+@use "../vendor/glyphter";
+
+@use "../common.blocks/button";
+@use "../common.blocks/form";
+@use "../common.blocks/modal";
+
+@use "../common.blocks/page";
+@use "../common.blocks/header";
+
+@use "../common.blocks/gallery";
+@use "../common.blocks/card";
+@use "../common.blocks/basket";
+@use "../common.blocks/order";
+@use "../common.blocks/order-success";
+
+
+@use "variables" as *;
+@use "mixins";

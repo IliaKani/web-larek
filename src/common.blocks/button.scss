@@ -1,0 +1,20 @@
+@use "variables" as *;
+@use "mixins";
+
+.button {
+  @include mixins.button($primary, white, $hover);
+  border: 0;
+
+  &_alt {
+    @include mixins.button(white, $primaryLight, $primaryLight);
+    border: $defaultBorder;
+    &:hover {
+      border: $hoverBorder;
+    }
+  }
+
+  &_alt-active {
+    @include mixins.button(white, $primaryLight, $primaryLight);
+    border: $hoverBorder;
+  }
+}

@@ -1,0 +1,18 @@
+@use "variables" as *;
+@use "mixins";
+
+.order {
+  @include mixins.flex(column);
+  gap: 4rem;
+  margin-bottom: 4rem;
+
+  &__field {
+    @include mixins.flex(column);
+    gap: 1.5rem;
+  }
+
+  &__buttons {
+    @include mixins.flex(row);
+    gap: 1.5rem;
+  }
+}
