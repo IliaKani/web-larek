@@ -5,7 +5,7 @@ export abstract class Model<T> {
         Object.assign(this, data);
     }
 
-    // tell everyone about model changes
+    // Сообщить всем что модель поменялась
     emitChanges(event: string, payload?: object) {
         this.events.emit(event, payload ?? {});
     }

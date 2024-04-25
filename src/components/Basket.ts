@@ -1,7 +1,7 @@
-import { IBasket } from '../../types';
-import { ensureElement, createElement } from '../../utils/utils';
-import { Component } from "../base/Component";
-import { EventEmitter } from "../base/events";
+import { IBasket } from '../types';
+import { ensureElement, createElement } from '../utils/utils';
+import { Component } from "./base/Component";
+import { EventEmitter } from "./base/events";
 
 export class Basket extends Component<IBasket> {
     protected _list: HTMLElement;
@@ -31,7 +31,7 @@ export class Basket extends Component<IBasket> {
             this._list.replaceChildren(createElement<HTMLParagraphElement>('p', {
                 textContent: 'Корзина пуста'
             }))
+            this.setDisabled(this._button, true)
         }
-        this.setDisabled(this._button, true)
     }
 }

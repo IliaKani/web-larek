@@ -2,20 +2,21 @@ export abstract class Component<T> {
     protected constructor(protected readonly container: HTMLElement) {
     }
 
+    // Инструментарий для работы с DOM в дочерних компонентах
 
-    // toggle class
+    // Переключить класс
     toggleClass(element: HTMLElement, className: string, force?: boolean) {
         element.classList.toggle(className, force);
     }
 
-    // set text content
+    // Установить текстовое содержимое
     protected setText(element: HTMLElement, value: unknown) {
         if (element) {
             element.textContent = String(value);
         }
     }
 
-    // change block status
+    // Сменить статус блокировки
     setDisabled(element: HTMLElement, state: boolean) {
         if (element) {
             if (state) element.setAttribute('disabled', 'disabled');
@@ -23,17 +24,17 @@ export abstract class Component<T> {
         }
     }
 
-    // hide block
+    // Скрыть
     protected setHidden(element: HTMLElement) {
         element.style.display = 'none';
     }
 
-    // show block
+    // Показать
     protected setVisible(element: HTMLElement) {
         element.style.removeProperty('display');
     }
 
-    // set image with alt text
+    // Установить изображение с алтернативным текстом
     protected setImage(element: HTMLImageElement, src: string, alt?: string) {
         if (element) {
             element.src = src;
@@ -43,7 +44,7 @@ export abstract class Component<T> {
         }
     }
 
-    // return DOM component
+    // Вернуть корневой DOM-элемент
     render(data?: Partial<T>): HTMLElement {
         Object.assign(this as object, data ?? {});
         return this.container;

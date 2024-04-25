@@ -50,7 +50,20 @@ Implements the “Observer” pattern and allows you to subscribe to events and 
 The class has methods `on`, `off`, `emit` - for subscribing to an event, unsubscribing from an event and notifying subscribers about the occurrence of an event, respectively.
 Additionally, the `onAll` and `offAll` methods have been implemented - for subscribing to all events and resetting all subscribers.
 
-### 2. Class Api
+События, обрабатываемые классом `EventEmitter`
+- `basket:open` - запускает callback, который запрашивает у класса AppStatus актуальное состояние корзины, с помощью Modal.render() выводит на экран попап с содежимым корзины; на кнопку Оформить вешается слушатель клика, запускающий событие `ordersDelivery:open`, на кнопку закрытия попапа (крестик) вешается слушатель клика, по которому попап закрывается;
+- `basket:changed` - запускает callback, который запрашивает у класса AppStatus список товаров в корзине; далее, если такого товара в корзине нет, то добавляет этот товар, увеличивает количество товара в корзине (счетчик) и общую стоимость корзины (`total`); далее, на кнопку удаления каждого из добавленных товаров устанавливается слушатель клика, который, в свою очередь запускает метод удаления товара из корзины и обновляет общую стоимость корзины;
+- `cards:changed` - запускает callback, который формирует карточки товаров (`Card`); на каждую из карточек устанавливается обработчик события `card:select`;
+- `card:select` - запускает callback, вызывающий метод `setPreview`, который, в свою очередь, запускает обработчик событие `preview:changed`;
+- `preview:changed` - запускает callback, который берет id карточки, запрашивает по нему всю информацию о выбранном товаре, формирует превью и с помощью Modal.render() выводит на экран попап с выбранным товаром; на кнопку добавления товара в корзину вешается слушатель клика, который в свою очередь, запускает событие `basket:changed`;
+- `ordersDelivery:open` - запускает callback, который с помощью Modal.render() и данных класса OrdersDelivery формирует и отображает модальное окно с формой ввода адреса доставки и выбора способа оплаты; на кнопки выбора способа оплаты вешается слушатель, запускающий событие `paymentMethod:changed`, которое, в свою очередь, запписывает выбранный способ оплаты в `AppStatus.order.payment`, на поле ввода вешается слушатель события ввода с клавиатуры, который запускает событие `ordersDelivery:changed`; на кнопку закрытия (крестик) вешается слушатель, который закрывает модальное окно и очищается форму ввода адреса доставки и выбранный способ оплаты;
+- `ordersDelivery:changed` - запускает callback, который записывает данные в `AppStatus.order.address`, а так же валидирует поля ввода с помощью метода `checkOredersDeliveryValidation()`; на кнопку Далее вешается слушатель сабмита формы, запускающий событие `ordersContacts:open` в случае, если валидация поля прошла успешно;
+- `ordersContacts:open` - запускает callback, который с помощью Modal.render() и данных класса OrdersContacts формирует и отображает модальное окно с формой ввода телефона и адреса электронной почты; на поля ввода вешается слушатель события ввода с клавиатуры, запускающий событие `ordersContacts:changed`; на кнопку закрытия попапа устанавливается слушатель события клика, который закрывает модальное окно, очищая при этом поля ввода формы контактов и формы доставки;
+- `ordersContacts:changed` - запускает callback, который который записывает введенные данные в `AppStatus.order.phone` и `AppStatus.order.email`, а так же валидирует поля ввода данных с помощью метода `checkOredersContactsValidation()`; в случае успешной валидации кнопка Оплатить становится активной и на нее устанавливется слушатель события `order:submit`;
+- `order:submit` - запускает callback, отправляющий сформированный объект заказа на сервер и, получив ответ об успешном оформлении заказа, очищает корзину и все формы заказа, сбрасывает состояние выбора способа оплаты и далее запускает событие `success:open`;
+- `success:open` - запускает callback, который с помощью Modal.render() и данных класса Success отображает на экране попап с информирование об успешном оформлении заказа.
+
+#### 2. Class Api
 This class works with basic requests to the server (GET, POST, PUT, DELETE) and processes responses received from the server.
 The class has methods:
 `get` and `post` - for executing requests to the server,
@@ -75,6 +88,19 @@ Includes only one method:
 `emitChanges` - to notify all subscribers that the model has changed.
 
 ## Data Model Components
+### 1. Class AppStatus
+Class for storing the current state of the application: data about the product, cart, preview, order and errors.
+Inherited from Model (`Model<IAppStatus>`).
+
+Class methods:
+- `clearBasket` ​​- to clear the basket data,
+- `addItemToBasket` ​​- to add a specific item to the cart,
+- `deleteItemFromBasket` ​​- to delete a specific item from the cart,
+- `setCards` - for drawing the product catalog,
+- `setPreview` - to open a product preview,
+- `setOrderDelivery` - to set order delivery data,
+- `setOrdersContacts` - to set contact data,
+- `checkOrdersValidation` - for validating the order form.
 
 ## Presentation Components
 Designed...
@@ -85,5 +111,4 @@ _class Form - order form (input fields, form validation, submission),
 _class Modal - a universal modal window,
 _class Success - displays an information message about a successful purchase,
 _Page class - for displaying page elements, for example, product cards, carts, etc.
-
 ## Key data types
