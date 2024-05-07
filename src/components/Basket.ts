@@ -17,21 +17,25 @@ export class Basket extends Component<IBasket> {
 
         if (this._button) {
             this._button.addEventListener('mouseup', () => {
-                events.emit('order:open')
-            })
-        }
-
+                events.emit('order:open');
+            });
+        };
         this.items =[];
-    }
+    };
 
     set items(items: HTMLElement[]) {
         if (items.length) {
-            this._list.replaceChildren(...items)
+            this._list.replaceChildren(...items);
+            this._button.disabled = false;
         } else {
             this._list.replaceChildren(createElement<HTMLParagraphElement>('p', {
                 textContent: 'Корзина пуста'
-            }))
-            this.setDisabled(this._button, true)
-        }
-    }
-}
+            }));
+            this._button.disabled = true;
+        };
+    };
+
+    set total(total: number) {
+        this.setText(this._total, `${total.toString()} синапсов`);
+    };
+};

@@ -7,7 +7,7 @@ export type CatalogChangeEvent = {
 };
 
 export class CardItem extends Model<ICard> {
-    id: CardId;
+    id: string;
     description: string;
     image: string;
     title: string;
@@ -16,8 +16,8 @@ export class CardItem extends Model<ICard> {
 }
 
 export class AppStatus extends Model<IAppStatus> {
+    catalog: CardItem[];
     basket: CardItem[] = [];
-    cards: CardItem[];
     order: IOrder = {
         payment: '',
         email: '',
@@ -29,28 +29,28 @@ export class AppStatus extends Model<IAppStatus> {
     preview: string | null;
     formErrors: FormErrors = {}
 
-    clearBasket() {
-        this.basket = [];
-        this.emitChanges('basket:changed', this.basket)
-    }
-
-    addItemToBasket(item: CardItem) {
-        this.basket.push(item);
-    }
-
-    deleteItemFromBasket(item: CardItem) {
-        this.basket = this.basket.filter(elem => elem != item)
-        this.emitChanges('count:changed', this.basket)
-    }
-
     setCards(items: ICard[]) {
-        this.cards = items.map(item => new CardItem(item, this.events))
-        this.emitChanges('cards:changed', {cards: this.cards})
+        this.catalog = items.map(item => new CardItem(item, this.events))
+        this.emitChanges('items:changed', {cards: this.catalog})
     }
 
     setPreview(item: CardItem) {
         this.preview = item.id;
         this.emitChanges('preview:changed', item)
+    }
+
+    addItemToBasket(item: CardItem) {
+        this.basket.indexOf(item) < 1 ?
+        this.basket.push(item) : 
+        false;
+        this.emitChanges('basket:changed', this.basket);
+        this.emitChanges('count:changed', this.basket);
+    }
+
+    deleteItemFromBasket(item: CardItem) {
+        this.basket = this.basket.filter(elem => elem != item);
+        this.emitChanges('basket:changed', this.basket);
+        this.emitChanges('count:changed', this.basket);
     }
 
     setPayment(method: Payment) {
@@ -86,5 +86,11 @@ export class AppStatus extends Model<IAppStatus> {
         this.formErrors = error;
         this.events.emit('contactsForm:changed', this.formErrors)
         return Object.keys(error).length === 0;
+    }
+
+    clearBasket() {
+        this.basket = [];
+        this.emitChanges('basket:changed', this.basket);
+        this.emitChanges('count:changed', this.basket)
     }
 }

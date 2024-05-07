@@ -1,9 +1,8 @@
 import { ICard } from "../types";
 import { ensureElement } from "../utils/utils";
 import { Component } from './base/Component';
-import { CardId } from '../types/index';
 
-const categories: {[key: string]: string} = {
+ const categories: {[key: string]: string} = {
     "софт-скил": "card__category_soft",
     "хард-скил": "card__category_hard",
     "кнопка": "card__category_button",
@@ -21,17 +20,19 @@ export class Card extends Component<ICard> {
     protected _image?: HTMLImageElement;
     protected _description?: HTMLElement;
     protected _button?: HTMLButtonElement;
-    protected _price?: HTMLButtonElement;
+    protected _price?: HTMLElement;
+    protected _count?: HTMLElement;
 
-    constructor(protected blockName: string, container: HTMLElement, actions?: ICardActions) {
+    constructor(container: HTMLElement, actions?: ICardActions) {
         super(container);
 
-        this._category = ensureElement<HTMLElement>(`.${blockName}__category`, container)
-        this._title = ensureElement<HTMLElement>(`.${blockName}__title`, container);
-        this._image = ensureElement<HTMLImageElement>(`.${blockName}__image`, container);
-        this._button = container.querySelector(`.${blockName}__button`);
-        this._description = container.querySelector(`.${blockName}__text`);
-        this._price = container.querySelector(`.${blockName}__price`);
+        this._category = container.querySelector('.card__category')
+        this._title = ensureElement<HTMLElement>('.card__title', container);
+        this._image = container.querySelector('.card__image');
+        this._button = container.querySelector('.button');
+        this._description = container.querySelector('.card__text');
+        this._price = ensureElement<HTMLElement>('.card__price', container);
+        this._count = container.querySelector('.basket__item-index');
 
         if (actions?.onClick) {
             if (this._button) {
@@ -42,7 +43,7 @@ export class Card extends Component<ICard> {
         }
     }
 
-    set id(value: CardId) {
+    set id(value: string) {
         this.container.dataset.id = value;
     }
 
@@ -86,6 +87,14 @@ export class Card extends Component<ICard> {
         return Number(this._price.textContent) || null;
     }
 
+    set index(value: string) {
+        this._count.textContent = value;
+      }
+    
+      get index(): string {
+        return this._count.textContent || '';
+      }
+
     set category(value: string) {
         this.setText(this._category, value);
         this._category.classList.add(categories[value]);
@@ -94,4 +103,10 @@ export class Card extends Component<ICard> {
     get category() {
         return this._category.textContent || '';
     }
+
+    set buttonText(value: string) {
+        if (this._button) {
+          this._button.textContent = value;
+        }
+      }
 }
