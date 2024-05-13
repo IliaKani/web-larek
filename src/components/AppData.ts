@@ -60,18 +60,19 @@ export class AppStatus extends Model<IAppStatus> {
 
     setOrdersDelivery(field: keyof IOrdersDelivery, value: string) {
         this.checkDeliveryValidation() ? this.order[field] = value : false;
-        this.emitChanges('ordersDelivery:changed', this.basket)
+        this.events.emit('ordersDelivery:changed', this.order)
     }
 
     setOrdersContacts(field: keyof IOrdersContacts, value: string) {
-        this.checkContactsValidation() ? this.order[field] = value : false;
-        this.emitChanges('ordersContacts:changed', this.basket)
+        this.order[field] = value;
+        this.checkContactsValidation() ?  
+        this.events.emit('ordersContacts:changed', this.order) : 
+        false;
     }
 
     checkDeliveryValidation() {
         const error: typeof this.formErrors = {};
         !this.order.address ? error.address = 'Введите адрес' : false;
-        !this.order.payment ? error.payment = 'Выберите спопосб оплаты' : false;
 
         this.formErrors = error;
         this.events.emit('deliveryForm:changed', this.formErrors)
