@@ -34,4 +34,8 @@
       color: lighten($primaryLight, 23%);
     }
   }
+
+  &__errors {
+    color: $error;
+  }
 }

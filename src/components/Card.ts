@@ -2,12 +2,12 @@ import { ICard } from "../types";
 import { ensureElement } from "../utils/utils";
 import { Component } from './base/Component';
 
- const categories: {[key: string]: string} = {
-    "софт-скил": "card__category_soft",
-    "хард-скил": "card__category_hard",
-    "кнопка": "card__category_button",
-    "дополнительное": "card__category_additional",
-    "другое": "card__category_other"
+ const categories: { [key: string]: string } = {
+    "soft-skill": "card__category_soft",
+    "hard-skill": "card__category_hard",
+    "button": "card__category_button",
+    "ancillary": "card__category_additional",
+    "other": "card__category_other"
 }
 
 interface ICardActions {
@@ -80,7 +80,7 @@ export class Card extends Component<ICard> {
     }
 
     set price(value: number | null) {
-        value === null ? this.setText(this._price, 'Бесценно') : this.setText(this._price, `${value.toString()} синапсов`);
+        value === null ? this.setText(this._price, 'Priceless') : this.setText(this._price, `${value.toString()} synapses`);
     }
 
     get price(): number {
@@ -108,5 +108,9 @@ export class Card extends Component<ICard> {
         if (this._button) {
           this._button.textContent = value;
         }
-      }
+    }
+
+    setDisabled() {
+        this._button.disabled = true;
+    }
 }

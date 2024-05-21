@@ -3,13 +3,13 @@
 
 .modal {
   @include mixins.sublayer;
-  height: 90vh;
+  height: 80vh;
   position: absolute;
   display: none;
   justify-content: center;
   background-color: $overlayBackground;
   z-index: 100;
-  padding-top: 5vh;
+  padding-top: 15vh;
   padding-bottom: 5vh;
 
   &_active {
@@ -62,9 +62,5 @@
     max-width: 60%;
     text-overflow: ellipsis;
     overflow: hidden;
-
-    &_error {
-      color: $error;
-    }
   }
 }

@@ -17,7 +17,7 @@ export class Basket extends Component<IBasket> {
 
         if (this._button) {
             this._button.addEventListener('mouseup', () => {
-                events.emit('order:open');
+                events.emit('order:open')
             });
         };
         this.items =[];
@@ -36,6 +36,6 @@ export class Basket extends Component<IBasket> {
     };
 
     set total(total: number) {
-        this.setText(this._total, `${total.toString()} синапсов`);
+        this.setText(this._total, `${total.toString()} synapses`);
     };
 };

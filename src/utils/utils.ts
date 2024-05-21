@@ -70,7 +70,7 @@ export function getObjectProperties(obj: object, filter?: (name: string, prop: P
 }
 
 /**
- * Устанавливает dataset атрибуты элемента
+ * Sets the dataset attributes of an element
  */
 export function setElementData<T extends Record<string, unknown> | object>(el: HTMLElement, data: T) {
     for (const key in data) {
@@ -79,7 +79,7 @@ export function setElementData<T extends Record<string, unknown> | object>(el: H
 }
 
 /**
- * Получает типизированные данные из dataset атрибутов элемента
+ * Gets typed data from a dataset of element attributes
  */
 export function getElementData<T extends Record<string, unknown>>(el: HTMLElement, scheme: Record<string, Function>): T {
     const data: Partial<T> = {};
@@ -90,7 +90,7 @@ export function getElementData<T extends Record<string, unknown>>(el: HTMLElemen
 }
 
 /**
- * Проверка на простой объект
+ * Checking for a simple object
  */
 export function isPlainObject(obj: unknown): obj is object {
     const prototype = Object.getPrototypeOf(obj);
@@ -103,9 +103,7 @@ export function isBoolean(v: unknown): v is boolean {
 }
 
 /**
- * Фабрика DOM-элементов в простейшей реализации
- * здесь не учтено много факторов
- * в интернет можно найти более полные реализации
+ * Factory of DOM elements in the simplest implementation
  */
 export function createElement<
     T extends HTMLElement

@@ -1,7 +1,4 @@
-export type CardId = string; //uuid?
-
-//Типы и интерфейсы базовых классов
-
+//Types and interfaces of base classes
 export type EventName = string | RegExp;
 export type Subscriber = Function;
 export type EmitterEvent = {
@@ -15,24 +12,24 @@ export interface IEvents {
     trigger<T extends object>(event: string, context?: Partial<T>): (data: T) => void;
   }
 
-//Ответ от сервера
+//Response from the server
 export type ApiListResponse<Type> = {
   total: number,
   items: Type[]
 };
 
-//Запросы на сервер
+//Requests to the server
 export type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
 
 
-//Методы для Api
+//Api methods
 export interface ILarekApi {
     getCardsList: () => Promise<ICard[]>;
-    getCard: (id: string) => Promise<ICard>;
+    // getCard: (id: string) => Promise<ICard>;
     orderProducts: (order: IOrder) => Promise<IOrderSuccess>
   }
   
-//Интерфейсы моделей данных
+//Data Model Interfaces
 export interface IAppStatus {
     catalog: ICard[];
     basket: ICard[];
@@ -42,9 +39,7 @@ export interface IAppStatus {
     order: IOrder | null;
   }
 
-//Интерфейсы компонентов представления
-
-export type Payment = 'online' | 'cash' | '';
+//View Component Interfaces
 
 export interface IPage {
     counter: number;
@@ -53,6 +48,7 @@ export interface IPage {
 }
 
 export interface ICard {
+    [key: string]: any;
     id: string,
     description: string,
     image: string,
@@ -75,11 +71,11 @@ export interface IOrdersContacts {
 
 export interface IOrder extends IOrdersDelivery, IOrdersContacts {
     total: number | null,
-    items: CardId[],
+    items: string[],
 }
 
 export interface IOrderSuccess {
-    id: string, //uuid?
+    id: string,
     total: number | null,
 }
 
