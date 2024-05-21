@@ -1,7 +1,9 @@
 # Project "Web Larёk" (from russian Larёk - kiosk/Späti )
 
 Stack: HTML, SCSS, TS, Webpack
+
 API: https://larek-api.nomoreparties.co
+
 Due to the fact that the server data is in Russian, an API (deepl) was used to translate the data. Therefore, there is a slight delay before the cards appear.
 
 Project structure:
