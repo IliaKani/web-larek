@@ -29,7 +29,7 @@ export class Basket extends Component<IBasket> {
             this._button.disabled = false;
         } else {
             this._list.replaceChildren(createElement<HTMLParagraphElement>('p', {
-                textContent: 'Корзина пуста'
+                textContent: 'Сart is empty'
             }));
             this._button.disabled = true;
         };
