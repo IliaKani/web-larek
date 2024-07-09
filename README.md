@@ -1,10 +1,11 @@
 # Project "Web Larёk" (from russian Larёk - kiosk/Späti )
+The online store with goods for web developers - Web stall. You can view the product catalog, add products to the cart and place an order.
 
 Stack: HTML, SCSS, TS, Webpack
 
 API: https://larek-api.nomoreparties.co
 
-Due to the fact that the server data is in Russian, an API (deepl) was used to translate the data. Therefore, there is a slight delay before the cards appear.
+Due to the fact that the server data is in Russian, an API (deepl) was used to translate the data.
 
 Project structure:
 - src/ — project source files
