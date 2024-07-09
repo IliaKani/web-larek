@@ -1,5 +1,5 @@
 # Project "Web Larёk" (from russian Larёk - kiosk/Späti )
-The online store with goods for web developers - Web stall. You can view the product catalog, add products to the cart and place an order.
+The online store with goods for web developers - Web kiosk. You can view the product catalog, add products to the cart and place an order.
 
 Stack: HTML, SCSS, TS, Webpack
 
