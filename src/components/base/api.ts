@@ -33,28 +33,29 @@ export class Api {
     }
 
     private async translateData(data: ApiListResponse<ICard>): Promise<ApiListResponse<ICard>> {
-    if (data.items) {
-        for (let i = 0; i < data.items.length; i++) {
-            const fieldsToTranslate = ['description', 'category', 'title'];
-            for (const field of fieldsToTranslate) {
-                if (isKeyOfICard(field as keyof ICard)) {
-                    const response = await fetch(this.deeplUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: `auth_key=${this.deeplAuthKey}&text=${encodeURIComponent(data.items[i][field])}&target_lang=EN`
-                    });
-                    const translatedData = await response.json();
-                    if (translatedData.translations && translatedData.translations.length > 0) {
-                        data.items[i][field] = translatedData.translations[0].text;
-                    } else {
-                        throw new Error(`Translation failed for field ${field}`);
+        if (data.items) {
+            const promises = data.items.flatMap((item, i) => {
+                const fieldsToTranslate = ['description', 'category', 'title'];
+                return fieldsToTranslate.map(async (field) => {
+                    if (isKeyOfICard(field as keyof ICard)) {
+                        const response = await fetch(this.deeplUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: `auth_key=${this.deeplAuthKey}&text=${encodeURIComponent(item[field])}&target_lang=EN`
+                        });
+                        const translatedData = await response.json();
+                        if (translatedData.translations && translatedData.translations.length > 0) {
+                            data.items[i][field] = translatedData.translations[0].text;
+                        } else {
+                            throw new Error(`Translation failed for field ${field}`);
+                        }
                     }
-                }
-            }
+                });
+            });
+            await Promise.all(promises);
         }
+        return data;
     }
-    return data;
-}
 
     get<T>(uri: string): Promise<T> {
         return fetch(this.baseUrl + uri, {
