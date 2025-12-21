@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "module": "es6",
     "target": "es2017",
-    "allowJs": true,
-    "experimentalDecorators": true,
+    "module": "es6",
     "moduleResolution": "node",
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "jsx": "react-jsx",
+    "noEmit": true
   },
-  //"include": ["src/index.ts", "src/types/*.d.ts"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "webpack.config.js", "postcss.config.js"]
 }
