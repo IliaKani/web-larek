@@ -2,13 +2,21 @@ import { ICard } from "../types";
 import { ensureElement } from "../utils/utils";
 import { Component } from './base/Component';
 
- const categories: { [key: string]: string } = {
-    "soft-skill": "card__category_soft",
-    "hard-skill": "card__category_hard",
-    "button": "card__category_button",
-    "ancillary": "card__category_additional",
-    "other": "card__category_other"
-}
+ const categories: Record<string, string> = {
+  // keys from API
+  "soft-skill": "card__category_soft",
+  "hard-skill": "card__category_hard",
+  "button": "card__category_button",
+  "ancillary": "card__category_additional",
+  "other": "card__category_other",
+
+  // RU labels 
+  "софт-скилл": "card__category_soft",
+     "хард-скилл": "card__category_hard",
+  кнопка: "card__category_button",
+  "дополнительное": "card__category_additional",
+  "другое": "card__category_other"
+};
 
 interface ICardActions {
     onClick: (event: MouseEvent) => void;
